@@ -3,9 +3,19 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
-import './assets/tailwind.css'
-import '@/assets/css/tailwind.css'
+import "./assets/tailwind.css";
+import "@/assets/css/tailwind.css";
+import feather from "vue-icon";
 
+Vue.use(feather, {
+  name: "icon",
+  data() {
+    return {
+      baseClass: "v-icon",
+      classPrefix: "v-icon-"
+    };
+  }
+});
 Vue.config.productionTip = false;
 
 new Vue({

@@ -1,20 +1,30 @@
 <template>
-  <div class="card-item">
-    <h4 class="card-item--name">{{name}}</h4>
-    <p class="card-item--desc">{{desc}}</p>
-    <p class="card-item--desc" v-if="desc == null">no description</p>
-    <p class="card-item--year">{{releaseYear}}</p>
+  <div class="card-item" @click="onCardSelected">
+    <h4 class="card-item--name">{{item.name}}</h4>
+    <!-- <p class="card-item--desc">{{item.description}}</p> -->
+    <!-- <p class="card-item--desc" v-if="item.description == null">no description</p> -->
+    <p class="card-item--year">{{item.release_year}}</p>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "card-item",
+
+  computed: {
+    ...mapState(["togglePopup"])
+  },
 
   props: {
     name: {
       type: String,
       required: false
+    },
+
+    item: {
+      type: Object,
+      required: true
     },
 
     desc: {
@@ -26,14 +36,26 @@ export default {
       type: Number,
       required: false
     }
+  },
+
+  mounted() {
+    console.log(this.item);
+  },
+
+  methods: {
+    onCardSelected() {
+      console.log("select", this.item);
+      this.$store.commit("setTogglePopup", !this.togglePopup);
+      this.$store.commit("setPhoneView", this.item);
+    }
   }
 };
 </script>
 
 <style lang="postcss" scoped>
 .card-item {
-  width: 100%;
-  @apply py-5 px-5 m-1 my-0 pl-0 border-b flex flex-col justify-center;
+  flex: 43%;
+  @apply py-5 cursor-pointer bg-grey-lightest rounded px-5 mx-1 my-2 border-b flex flex-col justify-center items-center;
   &--name {
     @apply mb-3;
   }
@@ -41,7 +63,7 @@ export default {
     @apply text-xs text-grey-darker font-sans text-left leading-normal;
   }
   &--year {
-    @apply mt-3 text-xs rounded text-white bg-teal p-1 self-start;
+    @apply mt-2 text-xs rounded text-white bg-teal p-1 self-center;
   }
 }
 </style>

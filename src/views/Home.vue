@@ -2,6 +2,7 @@
   <div class="home">
     <header-app></header-app>
     <card :items="items"></card>
+    <popup v-if="togglePopup" :title="phoneView.name" :description="phoneView.description"></popup>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { mapState } from "vuex";
 import headerApp from "@/components/header";
 import card from "@/components/card";
+import popup from "@/components/popup";
 
 export default {
   name: "home",
@@ -21,12 +23,21 @@ export default {
   },
 
   computed: {
-    ...mapState(["searchVal", "phones", "filteredPhones"])
+    ...mapState([
+      "searchVal",
+      "phones",
+      "filteredPhones",
+      "checkedYears",
+      "checkedBrands",
+      "togglePopup",
+      "phoneView"
+    ])
   },
 
   components: {
     headerApp,
-    card
+    card,
+    popup
   },
 
   watch: {
@@ -42,6 +53,22 @@ export default {
 
     phones(val) {
       this.items = val;
+    },
+
+    checkedBrands(val) {
+      console.log("checked brands", val);
+    },
+
+    checkedYears(val) {
+      console.log("checked years", val);
+    },
+
+    togglePopup(val) {
+      console.log("toggle popup", val);
+    },
+
+    phoneView(val) {
+      console.log("phone view", val);
     }
   },
 

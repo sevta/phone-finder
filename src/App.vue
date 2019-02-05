@@ -13,4 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
 </style>

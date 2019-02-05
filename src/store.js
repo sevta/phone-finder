@@ -7,7 +7,11 @@ export default new Vuex.Store({
   state: {
     searchVal: "",
     phones: [],
-    filteredPhones: []
+    checkedYears: [],
+    checkedBrands: [],
+    filteredPhones: [],
+    togglePopup: false,
+    phoneView: {}
   },
   mutations: {
     setSearchVal(state, payload) {
@@ -20,6 +24,22 @@ export default new Vuex.Store({
 
     setFilteredPhones(state, payload) {
       state.filteredPhones = payload;
+    },
+
+    setCheckedYears(state, payload) {
+      state.checkedYears = payload;
+    },
+
+    setCheckedBrands(state, payload) {
+      state.checkedBrands = payload;
+    },
+
+    setTogglePopup(state, payload) {
+      state.togglePopup = payload;
+    },
+
+    setPhoneView(state, payload) {
+      state.phoneView = payload;
     }
   },
   actions: {}
