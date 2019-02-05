@@ -11,7 +11,7 @@ import { mapState } from "vuex";
 import headerApp from "@/components/header";
 import card from "@/components/card";
 import popup from "@/components/popup";
-
+import phones from "../phone.json";
 export default {
   name: "home",
 
@@ -73,15 +73,18 @@ export default {
   },
 
   mounted() {
+    // console.log("phones", phones);
+    this.items = phones.phones;
+    this.$store.commit("setPhones", phones.phones);
     if (this.phones.length == 0) {
-      this.fetchPhones();
+      // this.fetchPhones();
     }
   },
 
   methods: {
     fetchPhones() {
       this.loading = true;
-      fetch("../data/phones.json", {
+      fetch("../phones.json", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
