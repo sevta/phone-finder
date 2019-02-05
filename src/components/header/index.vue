@@ -6,8 +6,10 @@
         <icon name="search"></icon>
         <input type="text" placeholder="Search" class="header--input" v-model="searchValue">
       </div>
-      <checkbox :items="years" :on-selected="onYearsSelect" text="All Years"></checkbox>
-      <checkbox :items="brands" :on-selected="onBrandsSelect" text="All Brands"></checkbox>
+      <div class="container-checkbox">
+        <checkbox :items="years" :on-selected="onYearsSelect" text="All Years"></checkbox>
+        <checkbox :items="brands" :on-selected="onBrandsSelect" text="All Brands"></checkbox>
+      </div>
     </form>
   </div>
 </template>
@@ -70,6 +72,10 @@ export default {
         @apply bg-teal text-white;
       }
     }
+  }
+
+  .container-checkbox {
+    @apply flex;
   }
 
   .selected-years {

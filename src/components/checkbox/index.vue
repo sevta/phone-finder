@@ -65,7 +65,7 @@ export default {
 }
 
 .btn-checkbox {
-  @apply bg-white py-1 px-2 text-teal;
+  @apply bg-white py-1 px-2 text-teal mr-10;
 }
 
 .expanded-checkbox {

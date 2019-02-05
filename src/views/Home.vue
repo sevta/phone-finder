@@ -56,11 +56,18 @@ export default {
     },
 
     checkedBrands(val) {
-      console.log("checked brands", val);
+      let filtered = this.filterByBrands(this.phones, val);
+      this.items = filtered;
+
+      console.log("filtered", val, filtered);
     },
 
-    checkedYears(val) {
-      console.log("checked years", val);
+    checkedYears(years) {
+      console.log("checked years", years, this.phones);
+      let filtered = this.filterByCategory(this.phones, years);
+      this.items = filtered;
+
+      console.log("filtered", filtered);
     },
 
     togglePopup(val) {
@@ -98,7 +105,36 @@ export default {
         .catch(err => console.log(err));
     },
 
+    filterByCategory(items, years) {
+      return items.filter(item => {
+        if (years.length == 0) {
+          return [];
+        }
+
+        if (years.indexOf(item.release_year.toString()) == -1) {
+          return false;
+        }
+
+        return true;
+      });
+    },
+
+    filterByBrands(items, brands) {
+      return items.filter(item => {
+        if (brands.length == 0) {
+          return [];
+        }
+
+        if (brands.indexOf(item.brand.toLowerCase()) == -1) {
+          return false;
+        }
+
+        return true;
+      });
+    },
+
     filterItems(items, value) {
+      let $this = this;
       return {
         byName() {
           return items.filter(
