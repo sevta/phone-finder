@@ -2,7 +2,9 @@
   <div class="home">
     <header-app></header-app>
     <card :items="items"></card>
-    <popup v-if="togglePopup" :title="phoneView.name" :description="phoneView.description"></popup>
+    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
+      <popup v-if="togglePopup" :title="phoneView.name" :description="phoneView.description"></popup>
+    </transition>
   </div>
 </template>
 
@@ -181,6 +183,23 @@ export default {
           this.$store.commit("setPhones", data.phones);
         })
         .catch(err => console.log(err));
+    },
+
+    beforeEnter(el) {
+      // console.log(el);
+      el.style.opacity = 0;
+    },
+
+    enter(el) {
+      setTimeout(() => {
+        el.style.opacity = 1;
+        document.querySelector(".inner-popup").classList.add("active");
+      }, 50);
+    },
+
+    leave(el) {
+      el.style.opacity = 0;
+      document.querySelector(".inner-popup").classList.remove("active");
     }
   }
 };

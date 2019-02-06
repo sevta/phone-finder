@@ -55,6 +55,7 @@ export default {
 <style lang="postcss" scoped>
 .card-item {
   flex: 43%;
+  transition: all 0.4s ease;
   @apply py-5 cursor-pointer bg-grey-lightest rounded px-5 mx-1 my-2 border-b flex flex-col justify-center items-center;
   &--name {
     @apply mb-3;

@@ -1,12 +1,14 @@
 <template>
   <div class="checkbox-wrapper">
     <button @click="expandCheckbox" class="btn-checkbox">{{expandedText}}</button>
-    <div class="expanded-checkbox" v-if="toggleCheckbox">
-      <label v-for="(item , i) in items" :key="i">
-        <input type="checkbox" :value="item" v-model="selected" @change="onSelected(selected)">
-        <span class="expanded-text">{{item}}</span>
-      </label>
-    </div>
+    <transition name="fade">
+      <div class="expanded-checkbox" v-if="toggleCheckbox">
+        <label v-for="(item , i) in items" :key="i">
+          <input type="checkbox" :value="item" v-model="selected" @change="onSelected(selected)">
+          <span class="expanded-text">{{item}}</span>
+        </label>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -60,6 +62,17 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transform: translateY(0px);
+  transition: all 0.3s ease;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 .checkbox-wrapper {
   @apply my-2;
 }
