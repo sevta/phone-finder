@@ -12,6 +12,7 @@ import headerApp from "@/components/header";
 import card from "@/components/card";
 import popup from "@/components/popup";
 import phones from "../phone.json";
+import { filtered } from "../helper";
 export default {
   name: "home",
 
@@ -42,9 +43,16 @@ export default {
 
   watch: {
     searchVal(value) {
-      let filter = this.filterItems(this.phones, value).byName();
-      this.items = filter;
-      this.$store.commit("setFilteredPhones", filter);
+      this.items = filtered(
+        this.phones,
+        {
+          brand: this.checkedBrands,
+          release_year: this.checkedYears
+        },
+        {
+          name: value
+        }
+      );
     },
 
     filteredPhones(val) {
@@ -56,18 +64,30 @@ export default {
     },
 
     checkedBrands(val) {
-      let filtered = this.filterByBrands(this.phones, val);
-      this.items = filtered;
-
-      console.log("filtered", val, filtered);
+      this.items = filtered(
+        this.phones,
+        {
+          brand: val,
+          release_year: this.checkedYears
+        },
+        {
+          name: this.searchVal
+        }
+      );
+      console.log("check years", this.checkedYears);
     },
 
     checkedYears(years) {
-      console.log("checked years", years, this.phones);
-      let filtered = this.filterByCategory(this.phones, years);
-      this.items = filtered;
-
-      console.log("filtered", filtered);
+      this.items = filtered(
+        this.phones,
+        {
+          brand: this.checkedBrands,
+          release_year: years
+        },
+        {
+          name: this.searchVal
+        }
+      );
     },
 
     togglePopup(val) {
@@ -86,6 +106,64 @@ export default {
     if (this.phones.length == 0) {
       // this.fetchPhones();
     }
+
+    // test
+    let data = [
+      {
+        name: "iphone 7",
+        brand: "Apple",
+        year: 2016
+      },
+      {
+        name: "iphone 8",
+        brand: "Apple",
+        year: 2017
+      },
+      {
+        name: "iphone x",
+        brand: "Apple",
+        year: 2018
+      },
+      {
+        name: "iphone xx",
+        brand: "Apple",
+        year: 2018
+      },
+      {
+        name: "iphone xxx",
+        brand: "Apple",
+        year: 2018
+      },
+      {
+        name: "galaxy s8",
+        brand: "Samsung",
+        year: 2017
+      },
+      {
+        name: "galaxy s9",
+        brand: "Samsung",
+        year: 2018
+      },
+      {
+        name: "mi 5",
+        brand: "Xiaomi",
+        year: 2015
+      }
+    ];
+
+    // test
+    let result = filtered(
+      this.phones,
+      {
+        year: [2016],
+        brand: ["apple", "samsung"]
+      },
+      {
+        name: "ga"
+      }
+    );
+
+    console.log("result", result);
   },
 
   methods: {
@@ -103,45 +181,6 @@ export default {
           this.$store.commit("setPhones", data.phones);
         })
         .catch(err => console.log(err));
-    },
-
-    filterByCategory(items, years) {
-      return items.filter(item => {
-        if (years.length == 0) {
-          return [];
-        }
-
-        if (years.indexOf(item.release_year.toString()) == -1) {
-          return false;
-        }
-
-        return true;
-      });
-    },
-
-    filterByBrands(items, brands) {
-      return items.filter(item => {
-        if (brands.length == 0) {
-          return [];
-        }
-
-        if (brands.indexOf(item.brand.toLowerCase()) == -1) {
-          return false;
-        }
-
-        return true;
-      });
-    },
-
-    filterItems(items, value) {
-      let $this = this;
-      return {
-        byName() {
-          return items.filter(
-            item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
-          );
-        }
-      };
     }
   }
 };

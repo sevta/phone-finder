@@ -8,13 +8,7 @@ import "@/assets/css/tailwind.css";
 import feather from "vue-icon";
 
 Vue.use(feather, {
-  name: "icon",
-  data() {
-    return {
-      baseClass: "v-icon",
-      classPrefix: "v-icon-"
-    };
-  }
+  name: "icon"
 });
 Vue.config.productionTip = false;
 
